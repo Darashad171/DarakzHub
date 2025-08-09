@@ -1,0 +1,184 @@
+-- Gui to Lua
+-- Version: 5.5
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ImageLabel = Instance.new("ImageLabel")
+local Title = Instance.new("TextLabel")
+local FreezeTradeBtn = Instance.new("TextButton")
+local AutoAcceptBtn = Instance.new("TextButton")
+local MinimizeButton = Instance.new("TextButton")
+local ExitButton = Instance.new("TextButton")
+local MinimizedIcon = Instance.new("ImageButton")
+local UICorner = Instance.new("UICorner")
+
+-- Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 34, 38)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.652, 0, 0.381, 0)
+Frame.Size = UDim2.new(0, 273, 0, 270)
+Frame.Active = true
+Frame.Draggable = true
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+
+ImageLabel.Parent = Frame
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.Position = UDim2.new(0.021, 0, 0.026, 0)
+ImageLabel.Size = UDim2.new(0, 260, 0, 256)
+ImageLabel.Image = "rbxassetid://11588149408"
+
+Title.Name = "Title"
+Title.Parent = ImageLabel
+Title.BackgroundTransparency = 1
+Title.Size = UDim2.new(0, 260, 0, 52)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "    Blox Fruit Script"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 20
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+FreezeTradeBtn.Name = "FreezeTradeBtn"
+FreezeTradeBtn.Parent = Frame
+FreezeTradeBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+FreezeTradeBtn.BackgroundTransparency = 0.5
+FreezeTradeBtn.Position = UDim2.new(0.134, 0, 0.449, 0)
+FreezeTradeBtn.Size = UDim2.new(0, 200, 0, 50)
+FreezeTradeBtn.Font = Enum.Font.LuckiestGuy
+FreezeTradeBtn.Text = "FREEZE TRADE (OFF)"
+FreezeTradeBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
+FreezeTradeBtn.TextSize = 14
+
+AutoAcceptBtn.Name = "AutoAcceptBtn"
+AutoAcceptBtn.Parent = Frame
+AutoAcceptBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoAcceptBtn.BackgroundTransparency = 0.55
+AutoAcceptBtn.Position = UDim2.new(0.134, 0, 0.689, 0)
+AutoAcceptBtn.Size = UDim2.new(0, 200, 0, 50)
+AutoAcceptBtn.Font = Enum.Font.LuckiestGuy
+AutoAcceptBtn.Text = "AUTO ACCEPT (OFF)"
+AutoAcceptBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
+AutoAcceptBtn.TextSize = 14
+
+MinimizeButton.Name = "MinimizeButton"
+MinimizeButton.Parent = Frame
+MinimizeButton.BackgroundTransparency = 1
+MinimizeButton.Position = UDim2.new(0.698, 0, 0.067, 0)
+MinimizeButton.Size = UDim2.new(0, 28, 0, 29)
+MinimizeButton.Font = Enum.Font.SourceSansBold
+MinimizeButton.Text = "-"
+MinimizeButton.TextColor3 = Color3.fromRGB(0, 255, 0)
+MinimizeButton.TextSize = 50
+
+ExitButton.Name = "ExitButton"
+ExitButton.Parent = Frame
+ExitButton.BackgroundTransparency = 1
+ExitButton.Position = UDim2.new(0.837, 0, 0.067, 0)
+ExitButton.Size = UDim2.new(0, 28, 0, 29)
+ExitButton.Font = Enum.Font.GothamBold
+ExitButton.Text = "x"
+ExitButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+ExitButton.TextSize = 26
+
+MinimizedIcon.Name = "MinimizedIcon"
+MinimizedIcon.Parent = ScreenGui
+MinimizedIcon.AnchorPoint = Vector2.new(1, 1)
+MinimizedIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MinimizedIcon.BorderSizePixel = 0
+MinimizedIcon.Position = UDim2.new(1, -60, 1, -60)
+MinimizedIcon.Size = UDim2.new(0, 50, 0, 50)
+MinimizedIcon.Visible = false
+MinimizedIcon.Image = "rbxassetid://9324887483"
+
+UICorner.CornerRadius = UDim.new(1, 0)
+UICorner.Parent = MinimizedIcon
+
+-- Scripts:
+
+local UIS = game:GetService("UserInputService")
+
+local isFreezeOn = false
+local isAutoOn = false
+
+-- Toggle Buttons + Exit + Minimize Logic
+local function setupUI()
+	local freezeBtn = Frame:WaitForChild("FreezeTradeBtn")
+	local autoBtn = Frame:WaitForChild("AutoAcceptBtn")
+	local exitBtn = Frame:WaitForChild("ExitButton")
+	local minimizeBtn = Frame:WaitForChild("MinimizeButton")
+	local miniIcon = ScreenGui:WaitForChild("MinimizedIcon")
+
+	-- Freeze Toggle
+	freezeBtn.MouseButton1Click:Connect(function()
+		isFreezeOn = not isFreezeOn
+		freezeBtn.Text = "FREEZE TRADE (" .. (isFreezeOn and "ON" or "OFF") .. ")"
+		freezeBtn.TextColor3 = isFreezeOn and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+	end)
+
+	-- Auto Accept Toggle
+	autoBtn.MouseButton1Click:Connect(function()
+		isAutoOn = not isAutoOn
+		autoBtn.Text = "AUTO ACCEPT (" .. (isAutoOn and "ON" or "OFF") .. ")"
+		autoBtn.TextColor3 = isAutoOn and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+	end)
+
+	-- Exit (Hides GUI)
+	exitBtn.MouseButton1Click:Connect(function()
+		ScreenGui.Enabled = false
+	end)
+
+	-- Minimize
+	minimizeBtn.MouseButton1Click:Connect(function()
+		Frame.Visible = false
+		miniIcon.Visible = true
+	end)
+
+	-- Restore from Minimize
+	miniIcon.MouseButton1Click:Connect(function()
+		miniIcon.Visible = false
+		Frame.Visible = true
+	end)
+
+	-- Dragging Minimized Icon
+	local dragging, dragInput, dragStart, startPos = false, nil, nil, nil
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		miniIcon.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+
+	miniIcon.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = miniIcon.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	miniIcon.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UIS.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+
+setupUI()
