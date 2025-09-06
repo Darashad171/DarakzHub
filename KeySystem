@@ -1,0 +1,94 @@
+--// Services
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+local player = Players.LocalPlayer
+
+--// ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "DarakzKeySystem"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+--// Frame
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 330, 0, 220)
+Frame.Position = UDim2.new(0.5, -165, 0.5, -110)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
+
+--// Title
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.Text = "𝘿𝙖𝙧𝙖𝙠𝙯 𝙃𝙪𝙗 | Key System"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+Title.Parent = Frame
+
+--// KeyBox
+local KeyBox = Instance.new("TextBox")
+KeyBox.Size = UDim2.new(0, 260, 0, 35)
+KeyBox.Position = UDim2.new(0.5, -130, 0.5, -40)
+KeyBox.PlaceholderText = "Enter Key..."
+KeyBox.Text = ""
+KeyBox.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+KeyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyBox.Font = Enum.Font.Gotham
+KeyBox.TextSize = 16
+KeyBox.Parent = Frame
+
+--// Get Key Button
+local GetKeyBtn = Instance.new("TextButton")
+GetKeyBtn.Size = UDim2.new(0, 120, 0, 35)
+GetKeyBtn.Position = UDim2.new(0.5, -130, 0.7, 0)
+GetKeyBtn.Text = "Get Key"
+GetKeyBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+GetKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetKeyBtn.Font = Enum.Font.GothamBold
+GetKeyBtn.TextSize = 16
+GetKeyBtn.Parent = Frame
+
+--// Enter Key Button
+local EnterKeyBtn = Instance.new("TextButton")
+EnterKeyBtn.Size = UDim2.new(0, 120, 0, 35)
+EnterKeyBtn.Position = UDim2.new(0.5, 10, 0.7, 0)
+EnterKeyBtn.Text = "Enter Key"
+EnterKeyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+EnterKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+EnterKeyBtn.Font = Enum.Font.GothamBold
+EnterKeyBtn.TextSize = 16
+EnterKeyBtn.Parent = Frame
+
+--// Notification Function
+local function Notify(txt)
+    StarterGui:SetCore("SendNotification", {
+        Title = "Darakz Hub",
+        Text = txt,
+        Duration = 3
+    })
+end
+
+--// Copy link function
+GetKeyBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://yourlink.com/getkey") -- ganti link ini
+    Notify("Link Copyed!!")
+end)
+
+--// Key system check
+local ValidKey = "fhgspl719jbuweq781211brjshlajq1092" -- ganti dengan key lu
+
+EnterKeyBtn.MouseButton1Click:Connect(function()
+    if KeyBox.Text == ValidKey then
+        Notify("Key Verified ✅")
+        Frame.Visible = false
+        
+        -- Auto Execute Script Utama
+        loadstring(game:HttpGet("https://yourlink.com/mainscript.lua"))()
+    else
+        Notify("Invalid Key ❌")
+    end
+end)
