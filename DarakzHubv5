@@ -1,0 +1,127 @@
+--// Darakz Hub V5.5 – Rayfield UI
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+ 
+local Window = Rayfield:CreateWindow({
+    Name = "Darakz Hub V5.5",
+    LoadingTitle = "Darakz Hub",
+    LoadingSubtitle = "V5.5 Loaded",
+    ConfigurationSaving = {
+        Enabled = false
+    },
+    Discord = {
+        Enabled = false
+    }
+})
+ 
+--// MAIN TAB
+local TradeTab = Window:CreateTab("Trade", 4483362458)
+ 
+TradeTab:CreateInput({
+    Name = "Target Username",
+    PlaceholderText = "Enter username here",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(user)
+        Target = user
+    end,
+})
+ 
+TradeTab:CreateToggle({
+    Name = "Freeze Trade",
+    CurrentValue = false,
+    Flag = "FreezeTrade",
+    Callback = function(v)
+        if v then
+            print("Freeze trade ON")
+        else
+            print("Freeze trade OFF")
+        end
+    end,
+})
+ 
+TradeTab:CreateToggle({
+    Name = "Auto Accept",
+    CurrentValue = false,
+    Flag = "AutoAccept",
+    Callback = function(v)
+        if v then
+            print("Auto accept enabled")
+        else
+            print("Auto accept disabled")
+        end
+    end,
+})
+ 
+TradeTab:CreateToggle({
+    Name = "Auto Add All Items",
+    CurrentValue = false,
+    Flag = "AutoAllItems",
+    Callback = function(v)
+        if v then
+            print("Auto add all items ON")
+        else
+            print("Auto add all items OFF")
+        end
+    end,
+})
+ 
+--// REMOTE LOGIC TAB
+local RemoteLogicTab = Window:CreateTab("Remote Logic", 4483362458)
+ 
+RemoteLogicTab:CreateDropdown({
+    Name = "Select Target Player",
+    Options = {},
+    Callback = function(value)
+        selectedPlayer = Players:FindFirstChild(value)
+    end,
+})
+ 
+RemoteLogicTab:CreateButton({
+    Name = "Force to Sit",
+    Callback = function()
+        if selectedPlayer then
+            ForceSit(selectedPlayer)
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No player selected!",
+                Duration = 3
+            })
+        end
+    end
+})
+ 
+RemoteLogicTab:CreateButton({
+    Name = "Force to Accept",
+    Callback = function()
+        if selectedPlayer then
+            ForceAcceptTrade(selectedPlayer)
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No player selected!",
+                Duration = 3
+            })
+        end
+    end
+})
+ 
+RemoteLogicTab:CreateButton({
+    Name = "Freeze Trade",
+    Callback = function()
+        if selectedPlayer then
+            FreezeTrade(selectedPlayer)
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No player selected!",
+                Duration = 3
+            })
+        end
+    end
+})
+ 
+Rayfield:Notify({
+    Title = "Darakz Hub V5.5",
+    Content = "Loaded successfully.",
+    Duration = 5
+})
