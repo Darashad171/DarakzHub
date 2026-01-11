@@ -1,0 +1,1082 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+if not cloneref then
+    getgenv().cloneref = function(obj) return obj end
+end
+
+-- Premium Key Configuration
+local CORRECT_KEY = "NEROSCRIPTS2026"
+local KEY_LINK = "http://pastepeso.net/NeroScriptKey"
+
+-- Services
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+while not LocalPlayer do
+    wait()
+    LocalPlayer = Players.LocalPlayer
+end
+
+-- Cleanup existing UI
+local existingUI = CoreGui:FindFirstChild("NeroKeySystem")
+if existingUI then
+    existingUI:Destroy()
+    task.wait()
+end
+
+-- Premium Key System ScreenGui
+local KeyScreenGui = Instance.new("ScreenGui")
+KeyScreenGui.Name = "NeroKeySystem"
+KeyScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+KeyScreenGui.Parent = CoreGui
+
+-- Premium Main Container
+local KeyMainContainer = Instance.new("Frame")
+KeyMainContainer.Name = "MainContainer"
+KeyMainContainer.Size = UDim2.new(0, 420, 0, 500)
+KeyMainContainer.Position = UDim2.new(0.5, -210, 0.5, -250)
+KeyMainContainer.BackgroundTransparency = 1
+KeyMainContainer.Parent = KeyScreenGui
+
+-- Premium Glow Effect
+local KeyGlow = Instance.new("ImageLabel")
+KeyGlow.Name = "Glow"
+KeyGlow.Size = UDim2.new(1, 50, 1, 50)
+KeyGlow.Position = UDim2.new(0, -25, 0, -25)
+KeyGlow.BackgroundTransparency = 1
+KeyGlow.Image = "rbxassetid://8992231221"
+KeyGlow.ImageColor3 = Color3.fromRGB(120, 0, 255)
+KeyGlow.ImageTransparency = 0.7
+KeyGlow.ScaleType = Enum.ScaleType.Slice
+KeyGlow.SliceCenter = Rect.new(100, 100, 100, 100)
+KeyGlow.SliceScale = 0.1
+KeyGlow.Parent = KeyMainContainer
+
+-- Premium Main Frame
+local KeyMainFrame = Instance.new("Frame")
+KeyMainFrame.Name = "MainFrame"
+KeyMainFrame.Size = UDim2.new(1, 0, 1, 0)
+KeyMainFrame.BackgroundColor3 = Color3.fromRGB(8, 8, 12)
+KeyMainFrame.BorderSizePixel = 0
+KeyMainFrame.Parent = KeyMainContainer
+
+-- Premium Corner
+local KeyCorner = Instance.new("UICorner")
+KeyCorner.CornerRadius = UDim.new(0, 16)
+KeyCorner.Parent = KeyMainFrame
+
+-- Premium Gradient Background
+local KeyGradient = Instance.new("UIGradient")
+KeyGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(12, 12, 18)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(8, 8, 12)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(12, 12, 18))
+})
+KeyGradient.Rotation = 45
+KeyGradient.Parent = KeyMainFrame
+
+-- Premium Top Bar
+local KeyTopBar = Instance.new("Frame")
+KeyTopBar.Name = "TopBar"
+KeyTopBar.Size = UDim2.new(1, 0, 0, 50)
+KeyTopBar.BackgroundColor3 = Color3.fromRGB(4, 4, 6)
+KeyTopBar.BorderSizePixel = 0
+KeyTopBar.Parent = KeyMainFrame
+
+local KeyTopBarCorner = Instance.new("UICorner")
+KeyTopBarCorner.CornerRadius = UDim.new(0, 16)
+KeyTopBarCorner.Parent = KeyTopBar
+
+-- Premium Title with Glow
+local KeyTitleLabel = Instance.new("TextLabel")
+KeyTitleLabel.Name = "Title"
+KeyTitleLabel.Size = UDim2.new(0, 250, 1, 0)
+KeyTitleLabel.Position = UDim2.new(0, 20, 0, 0)
+KeyTitleLabel.BackgroundTransparency = 1
+KeyTitleLabel.Text = "NERO SCRIPT"
+KeyTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyTitleLabel.TextSize = 24
+KeyTitleLabel.Font = Enum.Font.GothamBlack
+KeyTitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+KeyTitleLabel.Parent = KeyTopBar
+
+local KeyTitleGlow = Instance.new("UIGradient")
+KeyTitleGlow.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 0, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 100, 255))
+})
+KeyTitleGlow.Parent = KeyTitleLabel
+
+-- Premium Subtitle
+local KeySubtitle = Instance.new("TextLabel")
+KeySubtitle.Name = "Subtitle"
+KeySubtitle.Size = UDim2.new(1, -40, 0, 30)
+KeySubtitle.Position = UDim2.new(0, 20, 0, 70)
+KeySubtitle.BackgroundTransparency = 1
+KeySubtitle.Text = "Premium Key Authentication"
+KeySubtitle.TextColor3 = Color3.fromRGB(180, 180, 220)
+KeySubtitle.TextSize = 16
+KeySubtitle.Font = Enum.Font.GothamMedium
+KeySubtitle.TextXAlignment = Enum.TextXAlignment.Left
+KeySubtitle.Parent = KeyMainFrame
+
+-- Key Info Container
+local KeyInfoContainer = Instance.new("Frame")
+KeyInfoContainer.Name = "KeyInfoContainer"
+KeyInfoContainer.Size = UDim2.new(1, -40, 0, 80)
+KeyInfoContainer.Position = UDim2.new(0, 20, 0, 110)
+KeyInfoContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+KeyInfoContainer.BorderSizePixel = 0
+KeyInfoContainer.Parent = KeyMainFrame
+
+local KeyInfoCorner = Instance.new("UICorner")
+KeyInfoCorner.CornerRadius = UDim.new(0, 12)
+KeyInfoCorner.Parent = KeyInfoContainer
+
+local KeyInfoGlow = Instance.new("Frame")
+KeyInfoGlow.Size = UDim2.new(1, 4, 1, 4)
+KeyInfoGlow.Position = UDim2.new(0, -2, 0, -2)
+KeyInfoGlow.BackgroundColor3 = Color3.fromRGB(120, 0, 255)
+KeyInfoGlow.BackgroundTransparency = 0.7
+KeyInfoGlow.BorderSizePixel = 0
+KeyInfoGlow.ZIndex = -1
+KeyInfoGlow.Parent = KeyInfoContainer
+
+local KeyInfoGlowCorner = Instance.new("UICorner")
+KeyInfoGlowCorner.CornerRadius = UDim.new(0, 14)
+KeyInfoGlowCorner.Parent = KeyInfoGlow
+
+local KeyInfoLabel = Instance.new("TextLabel")
+KeyInfoLabel.Name = "KeyInfoLabel"
+KeyInfoLabel.Size = UDim2.new(1, -20, 1, 0)
+KeyInfoLabel.Position = UDim2.new(0, 10, 0, 0)
+KeyInfoLabel.BackgroundTransparency = 1
+KeyInfoLabel.Text = "Please obtain the key from the provided link. Copy and paste it below to access premium features."
+KeyInfoLabel.TextColor3 = Color3.fromRGB(200, 200, 240)
+KeyInfoLabel.TextSize = 14
+KeyInfoLabel.Font = Enum.Font.Gotham
+KeyInfoLabel.TextWrapped = true
+KeyInfoLabel.Parent = KeyInfoContainer
+
+-- Get Key Button Container
+local GetKeyContainer = Instance.new("Frame")
+GetKeyContainer.Name = "GetKeyContainer"
+GetKeyContainer.Size = UDim2.new(1, -40, 0, 65)
+GetKeyContainer.Position = UDim2.new(0, 20, 0, 210)
+GetKeyContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+GetKeyContainer.BorderSizePixel = 0
+GetKeyContainer.Parent = KeyMainFrame
+
+local GetKeyCorner = Instance.new("UICorner")
+GetKeyCorner.CornerRadius = UDim.new(0, 12)
+GetKeyCorner.Parent = GetKeyContainer
+
+local GetKeyGlow = Instance.new("Frame")
+GetKeyGlow.Size = UDim2.new(1, 4, 1, 4)
+GetKeyGlow.Position = UDim2.new(0, -2, 0, -2)
+GetKeyGlow.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+GetKeyGlow.BackgroundTransparency = 0.7
+GetKeyGlow.BorderSizePixel = 0
+GetKeyGlow.ZIndex = -1
+GetKeyGlow.Parent = GetKeyContainer
+
+local GetKeyGlowCorner = Instance.new("UICorner")
+GetKeyGlowCorner.CornerRadius = UDim.new(0, 14)
+GetKeyGlowCorner.Parent = GetKeyGlow
+
+-- Get Key Button
+local GetKeyButton = Instance.new("TextButton")
+GetKeyButton.Name = "GetKeyButton"
+GetKeyButton.Size = UDim2.new(1, 0, 1, 0)
+GetKeyButton.BackgroundTransparency = 1
+GetKeyButton.Text = ""
+GetKeyButton.Parent = GetKeyContainer
+
+-- Button Icon
+local GetKeyIcon = Instance.new("TextLabel")
+GetKeyIcon.Size = UDim2.new(0, 30, 1, 0)
+GetKeyIcon.Position = UDim2.new(0, 15, 0, 0)
+GetKeyIcon.BackgroundTransparency = 1
+GetKeyIcon.Text = "🔑"
+GetKeyIcon.TextColor3 = Color3.fromRGB(0, 200, 255)
+GetKeyIcon.TextSize = 20
+GetKeyIcon.Font = Enum.Font.GothamBold
+GetKeyIcon.TextXAlignment = Enum.TextXAlignment.Left
+GetKeyIcon.Parent = GetKeyContainer
+
+-- Button Text
+local GetKeyText = Instance.new("TextLabel")
+GetKeyText.Size = UDim2.new(0.8, 0, 1, 0)
+GetKeyText.Position = UDim2.new(0, 55, 0, 0)
+GetKeyText.BackgroundTransparency = 1
+GetKeyText.Text = "GET KEY LINK"
+GetKeyText.TextColor3 = Color3.fromRGB(200, 220, 255)
+GetKeyText.TextSize = 18
+GetKeyText.Font = Enum.Font.GothamBold
+GetKeyText.TextXAlignment = Enum.TextXAlignment.Left
+GetKeyText.Parent = GetKeyContainer
+
+-- Key Input Container
+local KeyInputContainer = Instance.new("Frame")
+KeyInputContainer.Name = "KeyInputContainer"
+KeyInputContainer.Size = UDim2.new(1, -40, 0, 70)
+KeyInputContainer.Position = UDim2.new(0, 20, 0, 290)
+KeyInputContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+KeyInputContainer.BorderSizePixel = 0
+KeyInputContainer.Parent = KeyMainFrame
+
+local KeyInputCorner = Instance.new("UICorner")
+KeyInputCorner.CornerRadius = UDim.new(0, 12)
+KeyInputCorner.Parent = KeyInputContainer
+
+local KeyInputGlow = Instance.new("Frame")
+KeyInputGlow.Size = UDim2.new(1, 4, 1, 4)
+KeyInputGlow.Position = UDim2.new(0, -2, 0, -2)
+KeyInputGlow.BackgroundColor3 = Color3.fromRGB(60, 60, 100)
+KeyInputGlow.BackgroundTransparency = 0.7
+KeyInputGlow.BorderSizePixel = 0
+KeyInputGlow.ZIndex = -1
+KeyInputGlow.Parent = KeyInputContainer
+
+local KeyInputGlowCorner = Instance.new("UICorner")
+KeyInputGlowCorner.CornerRadius = UDim.new(0, 14)
+KeyInputGlowCorner.Parent = KeyInputGlow
+
+-- Key Input Label
+local KeyInputLabel = Instance.new("TextLabel")
+KeyInputLabel.Name = "KeyLabel"
+KeyInputLabel.Size = UDim2.new(1, -20, 0, 25)
+KeyInputLabel.Position = UDim2.new(0, 10, 0, 5)
+KeyInputLabel.BackgroundTransparency = 1
+KeyInputLabel.Text = "ENTER KEY"
+KeyInputLabel.TextColor3 = Color3.fromRGB(150, 150, 200)
+KeyInputLabel.TextSize = 14
+KeyInputLabel.Font = Enum.Font.GothamMedium
+KeyInputLabel.TextXAlignment = Enum.TextXAlignment.Left
+KeyInputLabel.Parent = KeyInputContainer
+
+-- Key Input Box
+local KeyInput = Instance.new("TextBox")
+KeyInput.Name = "KeyInput"
+KeyInput.Size = UDim2.new(1, -20, 0, 35)
+KeyInput.Position = UDim2.new(0, 10, 0, 30)
+KeyInput.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+KeyInput.BorderSizePixel = 0
+KeyInput.PlaceholderText = "Paste key here..."
+KeyInput.PlaceholderColor3 = Color3.fromRGB(100, 100, 130)
+KeyInput.Text = ""
+KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyInput.TextSize = 16
+KeyInput.Font = Enum.Font.Gotham
+KeyInput.ClearTextOnFocus = false
+KeyInput.Parent = KeyInputContainer
+
+local KeyInputBoxCorner = Instance.new("UICorner")
+KeyInputBoxCorner.CornerRadius = UDim.new(0, 8)
+KeyInputBoxCorner.Parent = KeyInput
+
+local KeyInputStroke = Instance.new("UIStroke")
+KeyInputStroke.Color = Color3.fromRGB(60, 60, 80)
+KeyInputStroke.Thickness = 2
+KeyInputStroke.Parent = KeyInput
+
+-- Check Key Button Container
+local CheckKeyContainer = Instance.new("Frame")
+CheckKeyContainer.Name = "CheckKeyContainer"
+CheckKeyContainer.Size = UDim2.new(1, -40, 0, 65)
+CheckKeyContainer.Position = UDim2.new(0, 20, 0, 380)
+CheckKeyContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+CheckKeyContainer.BorderSizePixel = 0
+CheckKeyContainer.Parent = KeyMainFrame
+
+local CheckKeyCorner = Instance.new("UICorner")
+CheckKeyCorner.CornerRadius = UDim.new(0, 12)
+CheckKeyCorner.Parent = CheckKeyContainer
+
+local CheckKeyGlow = Instance.new("Frame")
+CheckKeyGlow.Size = UDim2.new(1, 4, 1, 4)
+CheckKeyGlow.Position = UDim2.new(0, -2, 0, -2)
+CheckKeyGlow.BackgroundColor3 = Color3.fromRGB(0, 180, 120)
+CheckKeyGlow.BackgroundTransparency = 0.7
+CheckKeyGlow.BorderSizePixel = 0
+CheckKeyGlow.ZIndex = -1
+CheckKeyGlow.Parent = CheckKeyContainer
+
+local CheckKeyGlowCorner = Instance.new("UICorner")
+CheckKeyGlowCorner.CornerRadius = UDim.new(0, 14)
+CheckKeyGlowCorner.Parent = CheckKeyGlow
+
+-- Check Key Button
+local CheckKeyButton = Instance.new("TextButton")
+CheckKeyButton.Name = "CheckKeyButton"
+CheckKeyButton.Size = UDim2.new(1, 0, 1, 0)
+CheckKeyButton.BackgroundTransparency = 1
+CheckKeyButton.Text = ""
+CheckKeyButton.Parent = CheckKeyContainer
+
+-- Check Button Icon
+local CheckKeyIcon = Instance.new("TextLabel")
+CheckKeyIcon.Size = UDim2.new(0, 30, 1, 0)
+CheckKeyIcon.Position = UDim2.new(0, 15, 0, 0)
+CheckKeyIcon.BackgroundTransparency = 1
+CheckKeyIcon.Text = "✓"
+CheckKeyIcon.TextColor3 = Color3.fromRGB(0, 255, 150)
+CheckKeyIcon.TextSize = 24
+CheckKeyIcon.Font = Enum.Font.GothamBold
+CheckKeyIcon.TextXAlignment = Enum.TextXAlignment.Left
+CheckKeyIcon.Parent = CheckKeyContainer
+
+-- Check Button Text
+local CheckKeyText = Instance.new("TextLabel")
+CheckKeyText.Size = UDim2.new(0.8, 0, 1, 0)
+CheckKeyText.Position = UDim2.new(0, 55, 0, 0)
+CheckKeyText.BackgroundTransparency = 1
+CheckKeyText.Text = "VERIFY KEY"
+CheckKeyText.TextColor3 = Color3.fromRGB(200, 255, 220)
+CheckKeyText.TextSize = 18
+CheckKeyText.Font = Enum.Font.GothamBold
+CheckKeyText.TextXAlignment = Enum.TextXAlignment.Left
+CheckKeyText.Parent = CheckKeyContainer
+
+-- Status Container
+local StatusContainer = Instance.new("Frame")
+StatusContainer.Name = "StatusContainer"
+StatusContainer.Size = UDim2.new(1, -40, 0, 50)
+StatusContainer.Position = UDim2.new(0, 20, 0, 460)
+StatusContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+StatusContainer.BorderSizePixel = 0
+StatusContainer.BackgroundTransparency = 1
+StatusContainer.Parent = KeyMainFrame
+
+local StatusCorner = Instance.new("UICorner")
+StatusCorner.CornerRadius = UDim.new(0, 12)
+StatusCorner.Parent = StatusContainer
+
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Name = "StatusLabel"
+StatusLabel.Size = UDim2.new(1, -20, 1, 0)
+StatusLabel.Position = UDim2.new(0, 10, 0, 0)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Text = ""
+StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+StatusLabel.TextSize = 14
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.TextTransparency = 1
+StatusLabel.Parent = StatusContainer
+
+-- Button Animation Functions
+local function animatePremiumButtonHover(container, glow, isHover)
+    TweenService:Create(container, TweenInfo.new(0.2), {
+        BackgroundColor3 = isHover and Color3.fromRGB(20, 20, 28) or Color3.fromRGB(15, 15, 22)
+    }):Play()
+    
+    TweenService:Create(glow, TweenInfo.new(0.2), {
+        BackgroundTransparency = isHover and 0.5 or 0.7
+    }):Play()
+end
+
+local function animatePremiumButtonClick(container, glow)
+    TweenService:Create(container, TweenInfo.new(0.1), {
+        BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    }):Play()
+    
+    TweenService:Create(glow, TweenInfo.new(0.1), {
+        BackgroundTransparency = 0.3
+    }):Play()
+    
+    task.wait(0.1)
+    animatePremiumButtonHover(container, glow, true)
+end
+
+-- Copy Link Function (Original Logic)
+local function copyToClipboard(text)
+    local executor = identifyexecutor and identifyexecutor() or "Unknown"
+    
+    if executor:find("Synapse") or executor:find("ScriptWare") then
+        setclipboard(text)
+        return true
+    elseif executor:find("Krnl") or executor:find("Fluxus") then
+        writeclipboard(text)
+        return true
+    elseif executor:find("Electron") then
+        toclipboard(text)
+        return true
+    else
+        pcall(function()
+            setclipboard(text)
+        end)
+        pcall(function()
+            writeclipboard(text)
+        end)
+    end
+    return false
+end
+
+-- Show Premium Status Message
+local function showPremiumStatus(message, isError)
+    StatusLabel.Text = message
+    StatusLabel.TextColor3 = isError and Color3.fromRGB(255, 100, 100) or Color3.fromRGB(100, 255, 150)
+    
+    StatusContainer.BackgroundTransparency = 0
+    TweenService:Create(StatusLabel, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+    
+    if not isError then
+        task.wait(2)
+        TweenService:Create(StatusLabel, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+        TweenService:Create(StatusContainer, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+    end
+end
+
+-- Check Key Function (Original Logic)
+local function checkKey(inputKey)
+    return inputKey:upper():gsub("%s+", "") == CORRECT_KEY
+end
+
+-- Trade Helper Script (Will be loaded after key verification)
+local function loadTradeHelperScript()
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local TweenService = game:GetService("TweenService")
+    local RunService = game:GetService("RunService")
+
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "TradeHelperPremiumUI"
+    screenGui.Parent = playerGui
+    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    screenGui.ResetOnSpawn = false
+
+    local mainContainer = Instance.new("Frame")
+    mainContainer.Name = "MainContainer"
+    mainContainer.Size = UDim2.new(0, 320, 0, 400)
+    mainContainer.Position = UDim2.new(0.5, -160, 0.5, -200)
+    mainContainer.BackgroundTransparency = 1
+    mainContainer.Parent = screenGui
+
+    local glow = Instance.new("ImageLabel")
+    glow.Name = "Glow"
+    glow.Size = UDim2.new(1, 40, 1, 40)
+    glow.Position = UDim2.new(0, -20, 0, -20)
+    glow.BackgroundTransparency = 1
+    glow.Image = "rbxassetid://8992231221"
+    glow.ImageColor3 = Color3.fromRGB(0, 170, 255)
+    glow.ImageTransparency = 0.8
+    glow.ScaleType = Enum.ScaleType.Slice
+    glow.SliceCenter = Rect.new(100, 100, 100, 100)
+    glow.SliceScale = 0.1
+    glow.Parent = mainContainer
+
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(1, 0, 0.75, 0)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+    mainFrame.BorderSizePixel = 0
+    mainFrame.Parent = mainContainer
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 14)
+    corner.Parent = mainFrame
+
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 22)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(10, 10, 15)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 22))
+    })
+    gradient.Rotation = 45
+    gradient.Parent = mainFrame
+
+    local topBar = Instance.new("Frame")
+    topBar.Name = "TopBar"
+    topBar.Size = UDim2.new(1, 0, 0, 40)
+    topBar.BackgroundColor3 = Color3.fromRGB(5, 5, 8)
+    topBar.BorderSizePixel = 0
+    topBar.Parent = mainFrame
+
+    local topBarCorner = Instance.new("UICorner")
+    topBarCorner.CornerRadius = UDim.new(0, 14)
+    topBarCorner.Parent = topBar
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Name = "Title"
+    titleLabel.Size = UDim2.new(0, 200, 1, 0)
+    titleLabel.Position = UDim2.new(0, 15, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = "TRADE HELPER"
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.TextSize = 20
+    titleLabel.Font = Enum.Font.GothamBlack
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.Parent = topBar
+
+    local titleGlow = Instance.new("UIGradient")
+    titleGlow.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 200, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 255, 255))
+    })
+    titleGlow.Parent = titleLabel
+
+    local controlButtons = Instance.new("Frame")
+    controlButtons.Name = "ControlButtons"
+    controlButtons.Size = UDim2.new(0, 60, 1, 0)
+    controlButtons.Position = UDim2.new(1, -65, 0, 0)
+    controlButtons.BackgroundTransparency = 1
+    controlButtons.Parent = topBar
+
+    local function createControlButton(name, color, position)
+        local button = Instance.new("TextButton")
+        button.Name = name
+        button.Size = UDim2.new(0, 20, 0, 20)
+        button.Position = position
+        button.BackgroundColor3 = color
+        button.BorderSizePixel = 0
+        button.Text = ""
+        button.AutoButtonColor = false
+        button.Parent = controlButtons
+        
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 10)
+        corner.Parent = button
+        
+        button.MouseEnter:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.2), {Size = UDim2.new(0, 22, 0, 22)}):Play()
+        end)
+        
+        button.MouseLeave:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.2), {Size = UDim2.new(0, 20, 0, 20)}):Play()
+        end)
+        
+        return button
+    end
+
+    local minimizeBtn = createControlButton("Minimize", Color3.fromRGB(255, 200, 0), UDim2.new(0, 5, 0.5, -10))
+    local closeBtn = createControlButton("Close", Color3.fromRGB(255, 50, 50), UDim2.new(1, -25, 0.5, -10))
+
+    local statusContainer = Instance.new("Frame")
+    statusContainer.Name = "StatusContainer"
+    statusContainer.Size = UDim2.new(1, -30, 0, 70)
+    statusContainer.Position = UDim2.new(0, 15, 0, 50)
+    statusContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+    statusContainer.BorderSizePixel = 0
+    statusContainer.Parent = mainFrame
+
+    local statusCorner = Instance.new("UICorner")
+    statusCorner.CornerRadius = UDim.new(0, 12)
+    statusCorner.Parent = statusContainer
+
+    local statusGlow = Instance.new("Frame")
+    statusGlow.Name = "StatusGlow"
+    statusGlow.Size = UDim2.new(1, 4, 1, 4)
+    statusGlow.Position = UDim2.new(0, -2, 0, -2)
+    statusGlow.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    statusGlow.BackgroundTransparency = 0.7
+    statusGlow.BorderSizePixel = 0
+    statusGlow.ZIndex = -1
+    statusGlow.Parent = statusContainer
+
+    local statusGlowCorner = Instance.new("UICorner")
+    statusGlowCorner.CornerRadius = UDim.new(0, 14)
+    statusGlowCorner.Parent = statusGlow
+
+    local statusLabel = Instance.new("TextLabel")
+    statusLabel.Name = "Status"
+    statusLabel.Size = UDim2.new(1, -20, 0.5, -5)
+    statusLabel.Position = UDim2.new(0, 10, 0, 5)
+    statusLabel.BackgroundTransparency = 1
+    statusLabel.Text = "STATUS"
+    statusLabel.TextColor3 = Color3.fromRGB(150, 150, 200)
+    statusLabel.TextSize = 14
+    statusLabel.Font = Enum.Font.GothamMedium
+    statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+    statusLabel.Parent = statusContainer
+
+    local statusValue = Instance.new("TextLabel")
+    statusValue.Name = "StatusValue"
+    statusValue.Size = UDim2.new(1, -20, 0.5, -5)
+    statusValue.Position = UDim2.new(0, 10, 0.5, 0)
+    statusValue.BackgroundTransparency = 1
+    statusValue.Text = "Not in trade"
+    statusValue.TextColor3 = Color3.fromRGB(255, 100, 100)
+    statusValue.TextSize = 16
+    statusValue.Font = Enum.Font.GothamBold
+    statusValue.TextXAlignment = Enum.TextXAlignment.Left
+    statusValue.Parent = statusContainer
+
+    local function createPremiumToggle(name, position, enabled)
+        local toggleContainer = Instance.new("Frame")
+        toggleContainer.Name = name .. "Toggle"
+        toggleContainer.Size = UDim2.new(1, -30, 0, 60)
+        toggleContainer.Position = position
+        toggleContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+        toggleContainer.BorderSizePixel = 0
+        toggleContainer.Parent = mainFrame
+        
+        local toggleCorner = Instance.new("UICorner")
+        toggleCorner.CornerRadius = UDim.new(0, 12)
+        toggleCorner.Parent = toggleContainer
+        
+        local toggleGlow = Instance.new("Frame")
+        toggleGlow.Size = UDim2.new(1, 4, 1, 4)
+        toggleGlow.Position = UDim2.new(0, -2, 0, -2)
+        toggleGlow.BackgroundColor3 = enabled and Color3.fromRGB(0, 255, 150) or Color3.fromRGB(100, 100, 150)
+        toggleGlow.BackgroundTransparency = 0.7
+        toggleGlow.BorderSizePixel = 0
+        toggleGlow.ZIndex = -1
+        toggleGlow.Parent = toggleContainer
+        
+        local toggleGlowCorner = Instance.new("UICorner")
+        toggleGlowCorner.CornerRadius = UDim.new(0, 14)
+        toggleGlowCorner.Parent = toggleGlow
+        
+        local label = Instance.new("TextLabel")
+        label.Name = "Label"
+        label.Size = UDim2.new(0.6, 0, 1, 0)
+        label.Position = UDim2.new(0, 15, 0, 0)
+        label.BackgroundTransparency = 1
+        label.Text = name
+        label.TextColor3 = enabled and Color3.fromRGB(200, 255, 200) or Color3.fromRGB(180, 180, 220)
+        label.TextSize = 16
+        label.Font = Enum.Font.GothamMedium
+        label.TextXAlignment = Enum.TextXAlignment.Left
+        label.Parent = toggleContainer
+        
+        local switch = Instance.new("Frame")
+        switch.Name = "Switch"
+        switch.Size = UDim2.new(0, 70, 0, 30)
+        switch.Position = UDim2.new(1, -85, 0.5, -15)
+        switch.BackgroundColor3 = enabled and Color3.fromRGB(0, 40, 20) or Color3.fromRGB(40, 20, 20)
+        switch.BorderSizePixel = 0
+        switch.Parent = toggleContainer
+        
+        local switchCorner = Instance.new("UICorner")
+        switchCorner.CornerRadius = UDim.new(0, 15)
+        switchCorner.Parent = switch
+        
+        local knob = Instance.new("Frame")
+        knob.Name = "Knob"
+        knob.Size = UDim2.new(0, 26, 0, 26)
+        knob.Position = enabled and UDim2.new(1, -28, 0.5, -13) or UDim2.new(0, 2, 0.5, -13)
+        knob.BackgroundColor3 = enabled and Color3.fromRGB(0, 255, 150) or Color3.fromRGB(255, 100, 100)
+        knob.BorderSizePixel = 0
+        knob.Parent = switch
+        
+        local knobCorner = Instance.new("UICorner")
+        knobCorner.CornerRadius = UDim.new(0, 13)
+        knobCorner.Parent = knob
+        
+        local button = Instance.new("TextButton")
+        button.Name = "Button"
+        button.Size = UDim2.new(1, 0, 1, 0)
+        button.BackgroundTransparency = 1
+        button.Text = ""
+        button.Parent = toggleContainer
+        
+        button.MouseEnter:Connect(function()
+            TweenService:Create(toggleContainer, TweenInfo.new(0.2), {
+                BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+            }):Play()
+        end)
+        
+        button.MouseLeave:Connect(function()
+            TweenService:Create(toggleContainer, TweenInfo.new(0.2), {
+                BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+            }):Play()
+        end)
+        
+        return {
+            container = toggleContainer,
+            switch = switch,
+            knob = knob,
+            label = label,
+            button = button,
+            glow = toggleGlow,
+            enabled = enabled
+        }
+    end
+
+    local freezeToggle = createPremiumToggle("FREEZE TRADE", UDim2.new(0, 15, 0, 140), false)
+    local forceToggle = createPremiumToggle("FORCE ACCEPT", UDim2.new(0, 15, 0, 210), false)
+
+    local function animatePremiumToggle(toggle, enabled)
+        local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+        
+        local knobTween = TweenService:Create(toggle.knob, tweenInfo, {
+            Position = enabled and UDim2.new(1, -28, 0.5, -13) or UDim2.new(0, 2, 0.5, -13),
+            BackgroundColor3 = enabled and Color3.fromRGB(0, 255, 150) or Color3.fromRGB(255, 100, 100)
+        })
+        
+        local switchTween = TweenService:Create(toggle.switch, tweenInfo, {
+            BackgroundColor3 = enabled and Color3.fromRGB(0, 40, 20) or Color3.fromRGB(40, 20, 20)
+        })
+        
+        local labelTween = TweenService:Create(toggle.label, tweenInfo, {
+            TextColor3 = enabled and Color3.fromRGB(200, 255, 200) or Color3.fromRGB(180, 180, 220)
+        })
+        
+        local glowTween = TweenService:Create(toggle.glow, tweenInfo, {
+            BackgroundColor3 = enabled and Color3.fromRGB(0, 255, 150) or Color3.fromRGB(100, 100, 150)
+        })
+        
+        knobTween:Play()
+        switchTween:Play()
+        labelTween:Play()
+        glowTween:Play()
+    end
+
+    local function showPremiumNotification(text, color)
+        local notifContainer = Instance.new("Frame")
+        notifContainer.Size = UDim2.new(1, -40, 0, 50)
+        notifContainer.Position = UDim2.new(0, 20, 1, 20)
+        notifContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+        notifContainer.BorderSizePixel = 0
+        notifContainer.ZIndex = 100
+        notifContainer.Parent = mainFrame
+        
+        local notifCorner = Instance.new("UICorner")
+        notifCorner.CornerRadius = UDim.new(0, 12)
+        notifCorner.Parent = notifContainer
+        
+        local notifGlow = Instance.new("Frame")
+        notifGlow.Size = UDim2.new(1, 4, 1, 4)
+        notifGlow.Position = UDim2.new(0, -2, 0, -2)
+        notifGlow.BackgroundColor3 = color
+        notifGlow.BackgroundTransparency = 0.7
+        notifGlow.BorderSizePixel = 0
+        notifGlow.ZIndex = 99
+        notifGlow.Parent = notifContainer
+        
+        local notifGlowCorner = Instance.new("UICorner")
+        notifGlowCorner.CornerRadius = UDim.new(0, 14)
+        notifGlowCorner.Parent = notifGlow
+        
+        local notifText = Instance.new("TextLabel")
+        notifText.Size = UDim2.new(1, -20, 1, 0)
+        notifText.Position = UDim2.new(0, 10, 0, 0)
+        notifText.BackgroundTransparency = 1
+        notifText.Text = text
+        notifText.TextColor3 = Color3.fromRGB(255, 255, 255)
+        notifText.TextSize = 14
+        notifText.Font = Enum.Font.GothamMedium
+        notifText.Parent = notifContainer
+        
+        local showTween = TweenService:Create(notifContainer, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0, 20, 1, -70)
+        })
+        showTween:Play()
+        
+        wait(2.5)
+        
+        local hideTween = TweenService:Create(notifContainer, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+            Position = UDim2.new(0, 20, 1, 20)
+        })
+        hideTween:Play()
+        hideTween.Completed:Connect(function()
+            notifContainer:Destroy()
+        end)
+    end
+
+    local inTrade = false
+    local tradingPartner = ""
+    local tradeConnection
+
+    local function checkTradeStatus()
+        local playerGui = player.PlayerGui
+        local mainGui = playerGui:FindFirstChild("Main")
+        if not mainGui then return false, "" end
+        
+        local tradeFrame = mainGui:FindFirstChild("Trade")
+        if not tradeFrame or not tradeFrame.Visible then return false, "" end
+
+        local container = tradeFrame:FindFirstChild("Container")
+        if not container then return false, "" end
+        
+        local frame1 = container:FindFirstChild("1")
+        local frame2 = container:FindFirstChild("2")
+        if not frame1 or not frame2 then return false, "" end
+
+        local player1Label = frame1:FindFirstChild("TextLabel")
+        local player2Label = frame2:FindFirstChild("TextLabel")
+        if not player1Label or not player2Label then return false, "" end
+
+        local localPlayerName = string.lower(player.Name)
+        local localPlayerDisplay = string.lower(player.DisplayName)
+        local player1Name = string.lower(player1Label.Text)
+        local player2Name = string.lower(player2Label.Text)
+        
+        local tradingPartnerName
+        if player1Name == localPlayerName or player1Name == localPlayerDisplay then
+            tradingPartnerName = player2Name
+        elseif player2Name == localPlayerName or player2Name == localPlayerDisplay then
+            tradingPartnerName = player1Name
+        else
+            return false, ""
+        end
+        
+        return true, tradingPartnerName
+    end
+
+    local function updateUI()
+        local isInTrade, partner = checkTradeStatus()
+        
+        if isInTrade ~= inTrade then
+            inTrade = isInTrade
+            tradingPartner = partner
+            
+            if inTrade then
+                statusValue.Text = "TRADING: " .. partner
+                statusValue.TextColor3 = Color3.fromRGB(0, 255, 150)
+                
+                TweenService:Create(statusGlow, TweenInfo.new(0.3), {
+                    BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+                }):Play()
+            else
+                statusValue.Text = "Not in trade"
+                statusValue.TextColor3 = Color3.fromRGB(255, 100, 100)
+                
+                TweenService:Create(statusGlow, TweenInfo.new(0.3), {
+                    BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+                }):Play()
+                
+                if freezeToggle.enabled then
+                    freezeToggle.enabled = false
+                    animatePremiumToggle(freezeToggle, false)
+                end
+                if forceToggle.enabled then
+                    forceToggle.enabled = false
+                    animatePremiumToggle(forceToggle, false)
+                end
+            end
+        end
+    end
+
+    freezeToggle.button.MouseButton1Click:Connect(function()
+        if not inTrade then
+            spawn(function()
+                showPremiumNotification("You need to be in a trade!", Color3.fromRGB(255, 100, 100))
+            end)
+            return
+        end
+        
+        freezeToggle.enabled = not freezeToggle.enabled
+        animatePremiumToggle(freezeToggle, freezeToggle.enabled)
+    end)
+
+    forceToggle.button.MouseButton1Click:Connect(function()
+        if not inTrade then
+            spawn(function()
+                showPremiumNotification("You need to be in a trade!", Color3.fromRGB(255, 100, 100))
+            end)
+            return
+        end
+        
+        forceToggle.enabled = not forceToggle.enabled
+        animatePremiumToggle(forceToggle, forceToggle.enabled)
+    end)
+
+    local isDragging = false
+    local dragStart = nil
+    local startPos = nil
+
+    local function startPremiumDrag(input)
+        isDragging = true
+        dragStart = input.Position
+        startPos = mainContainer.Position
+    end
+
+    local function updatePremiumDrag(input)
+        if isDragging then
+            local delta = input.Position - dragStart
+            mainContainer.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end
+
+    local function endPremiumDrag()
+        isDragging = false
+    end
+
+    topBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            startPremiumDrag(input)
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            updatePremiumDrag(input)
+        end
+    end)
+
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            endPremiumDrag()
+        end
+    end)
+
+    minimizeBtn.MouseButton1Click:Connect(function()
+        TweenService:Create(mainFrame, TweenInfo.new(0.3), {
+            Size = UDim2.new(1, 0, 0, 40)
+        }):Play()
+    end)
+
+    closeBtn.MouseButton1Click:Connect(function()
+        local closeTween = TweenService:Create(mainContainer, TweenInfo.new(0.4), {
+            Size = UDim2.new(0, 0, 0, 0),
+            Position = UDim2.new(0.5, 0, 0.5, 0)
+        })
+        closeTween:Play()
+        closeTween.Completed:Wait()
+        screenGui:Destroy()
+    end)
+
+    tradeConnection = RunService.Heartbeat:Connect(updateUI)
+
+    local entranceTween = TweenService:Create(mainContainer, TweenInfo.new(0.8, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Size = UDim2.new(0, 320, 0, 400),
+        Position = UDim2.new(0.5, -160, 0.5, -200)
+    })
+    mainContainer.Size = UDim2.new(0, 0, 0, 0)
+    mainContainer.Position = UDim2.new(0.5, 0, 0.5, 0)
+    entranceTween:Play()
+end
+
+-- Verify Key Function
+local function verifyKey()
+    local inputKey = KeyInput.Text
+    
+    if inputKey == "" then
+        showPremiumStatus("Please enter a key first", true)
+        return
+    end
+    
+    if checkKey(inputKey) then
+        showPremiumStatus("✓ Key verified! Loading Trade Helper...", false)
+        
+        -- Success animation
+        TweenService:Create(KeyInputStroke, TweenInfo.new(0.3), {Color = Color3.fromRGB(0, 255, 150)}):Play()
+        TweenService:Create(CheckKeyGlow, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(0, 255, 150)}):Play()
+        
+        -- Premium exit animation
+        local exitTween = TweenService:Create(KeyMainContainer, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+            Size = UDim2.new(0, 0, 0, 0),
+            Position = UDim2.new(0.5, 0, 0.5, 0)
+        })
+        exitTween:Play()
+        
+        exitTween.Completed:Wait()
+        KeyScreenGui:Destroy()
+        
+        -- Load Trade Helper Script
+        task.wait(0.5)
+        loadTradeHelperScript()
+        
+    else
+        showPremiumStatus("Invalid key. Please get the correct key.", true)
+        TweenService:Create(KeyInputStroke, TweenInfo.new(0.3), {Color = Color3.fromRGB(255, 100, 100)}):Play()
+        TweenService:Create(KeyInputGlow, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(255, 100, 100)}):Play()
+        task.wait(0.3)
+        TweenService:Create(KeyInputStroke, TweenInfo.new(0.3), {Color = Color3.fromRGB(60, 60, 80)}):Play()
+        TweenService:Create(KeyInputGlow, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(60, 60, 100)}):Play()
+    end
+end
+
+-- Get Key Button Events
+GetKeyButton.MouseEnter:Connect(function()
+    animatePremiumButtonHover(GetKeyContainer, GetKeyGlow, true)
+end)
+
+GetKeyButton.MouseLeave:Connect(function()
+    animatePremiumButtonHover(GetKeyContainer, GetKeyGlow, false)
+end)
+
+GetKeyButton.MouseButton1Down:Connect(function()
+    animatePremiumButtonClick(GetKeyContainer, GetKeyGlow)
+end)
+
+GetKeyButton.MouseButton1Click:Connect(function()
+    if copyToClipboard(KEY_LINK) then
+        showPremiumStatus("Link copied! Please go to browser and paste to get the key", false)
+    else
+        showPremiumStatus("Link copied! Please go to browser and paste to get the key", false)
+    end
+end)
+
+-- Check Key Button Events
+CheckKeyButton.MouseEnter:Connect(function()
+    animatePremiumButtonHover(CheckKeyContainer, CheckKeyGlow, true)
+end)
+
+CheckKeyButton.MouseLeave:Connect(function()
+    animatePremiumButtonHover(CheckKeyContainer, CheckKeyGlow, false)
+end)
+
+CheckKeyButton.MouseButton1Down:Connect(function()
+    animatePremiumButtonClick(CheckKeyContainer, CheckKeyGlow)
+end)
+
+CheckKeyButton.MouseButton1Click:Connect(function()
+    verifyKey()
+end)
+
+-- Key Input Submit (Enter key)
+KeyInput.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        verifyKey()
+    end
+end)
+
+-- Premium Dragging System
+local isDragging = false
+local dragStart = nil
+local startPos = nil
+
+local function startKeyDrag(input)
+    isDragging = true
+    dragStart = input.Position
+    startPos = KeyMainContainer.Position
+end
+
+local function updateKeyDrag(input)
+    if isDragging then
+        local delta = input.Position - dragStart
+        KeyMainContainer.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end
+
+local function endKeyDrag()
+    isDragging = false
+end
+
+KeyTopBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        startKeyDrag(input)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        updateKeyDrag(input)
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        endKeyDrag()
+    end
+end)
+
+-- Focus on input box
+task.wait(0.5)
+KeyInput:CaptureFocus()
+
+-- Premium Entrance Animation
+local entranceTween = TweenService:Create(KeyMainContainer, TweenInfo.new(0.8, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    Size = UDim2.new(0, 420, 0, 500),
+    Position = UDim2.new(0.5, -210, 0.5, -250)
+})
+KeyMainContainer.Size = UDim2.new(0, 0, 0, 0)
+KeyMainContainer.Position = UDim2.new(0.5, 0, 0.5, 0)
+entranceTween:Play()
